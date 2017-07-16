@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Application.Jobs.Queries.GetJobsList.JobsModel>
+
+@{
+    ViewBag.Title = "Home Page";
+    string jobName = "";
+    decimal totalPrice = 0;
+}
+
+<div class="jumbotron">
+    <h1>InnerWorkings Job Assignment</h1>
+</div>
+
+@if (Model != null)
+{
+    foreach (var job in Model)
+    {
+        if (jobName != job.JobName && totalPrice != 0)
+        {
+            <div class="col-lg-offset-6">
+                <h4><b>Total: @string.Format("{0:C}", totalPrice) </b></h4>
+            </div>
+        }
+
+        if (jobName != job.JobName)
+        {
+            <h3><b>@job.JobName</b></h3>
+        }
+
+        <table class="table col-lg-4">
+            <tbody>
+                <tr>
+                    <td class="col-lg-2">@job.DescName</td>
+                    <td class="col-lg-2">@string.Format("{0:C}", job.Price)</td>
+                </tr>
+            </tbody>
+        </table>
+        jobName = job.JobName;
+        totalPrice = job.TotalPrice;
+    }
+    <div class="col-lg-offset-6">
+        <h4><b>Total: @string.Format("{0:C}", totalPrice)</b></h4>
+    </div>
+}
+else
+{
+    <h4>Nothing found</h4>
+}
+
